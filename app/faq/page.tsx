@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import SiteNavbar from "@/components/SiteNavbar";
 
 const faqs = [
   {
@@ -36,22 +37,7 @@ const faqs = [
 export default function FAQPage() {
   return (
     <main className="min-h-screen bg-[#fbfcfb] text-[#090d0b]">
-      <header className="border-b border-gray-100 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-          <a href="/" className="flex items-center gap-3">
-            <LogoMark />
-            <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
-          </a>
-
-          <a
-            href="/"
-            className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-5 py-3 text-sm font-semibold transition hover:border-green-200 hover:text-green-600"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back home
-          </a>
-        </div>
-      </header>
+      <SiteNavbar />
 
       <section className="mx-auto max-w-5xl px-6 py-20 md:px-10 md:py-28">
         <p className="text-sm font-bold uppercase tracking-wide text-green-600">

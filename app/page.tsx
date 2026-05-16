@@ -66,6 +66,42 @@ export default function Home() {
   );
 }
 
+function Navbar() {
+  return (
+    <header className="border-b border-gray-100 bg-white/80 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
+        <a href="/" className="flex items-center gap-3">
+          <LogoMark />
+          <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
+        </a>
+
+        <nav className="hidden items-center gap-10 text-sm font-medium md:flex">
+          <a href="#how-it-works" className="transition hover:text-green-600">
+            How it works
+          </a>
+          <a href="/why-hassaleh" className="transition hover:text-green-600">
+            Why Hassaleh
+          </a>
+          <a href="/product" className="transition hover:text-green-600">
+            Product
+          </a>
+          <a href="/faq" className="transition hover:text-green-600">
+            FAQ
+          </a>
+        </nav>
+
+        <a
+          href="#waitlist"
+          className="hidden rounded-2xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-green-100 transition hover:bg-green-700 md:flex"
+        >
+          Join the waitlist
+          <ArrowUpRight className="ml-2 h-4 w-4" />
+        </a>
+      </div>
+    </header>
+  );
+}
+
 function WaitlistCard() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -95,18 +131,17 @@ function WaitlistCard() {
     ]);
 
     if (error) {
-  console.error("Supabase waitlist error:", error);
+      console.error("Supabase waitlist error:", error);
+      setStatus("error");
 
-  setStatus("error");
+      if (error.code === "23505") {
+        setMessage("This email is already on the waitlist.");
+      } else {
+        setMessage(error.message || "Something went wrong. Please try again.");
+      }
 
-  if (error.code === "23505") {
-    setMessage("This email is already on the waitlist.");
-  } else {
-    setMessage(error.message || "Something went wrong. Please try again.");
-  }
-
-  return;
-}
+      return;
+    }
 
     setStatus("success");
     setMessage("You're on the waitlist. Welcome to Hassaleh.");
@@ -117,6 +152,7 @@ function WaitlistCard() {
 
   return (
     <form
+      id="waitlist"
       onSubmit={handleSubmit}
       className="mt-8 max-w-md rounded-[1.75rem] border border-gray-200 bg-white p-6 shadow-xl shadow-gray-100"
     >
@@ -187,35 +223,11 @@ function WaitlistCard() {
   );
 }
 
-function Navbar() {
-  return (
-    <header className="border-b border-gray-100 bg-white/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-        <div className="flex items-center gap-3">
-          <LogoMark />
-          <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
-        </div>
-
-        <nav className="hidden items-center gap-10 text-sm font-medium md:flex">
-          <a href="#how-it-works">How it works</a>
-          <a href="#">Why Hassaleh</a>
-          <a href="#">Product</a>
-          <a href="#">FAQ</a>
-        </nav>
-
-        <button className="hidden rounded-2xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-green-100 transition hover:bg-green-700 md:flex">
-          Join the waitlist
-          <ArrowUpRight className="ml-2 h-4 w-4" />
-        </button>
-      </div>
-    </header>
-  );
-}
-
 function PhoneMockup() {
   return (
     <div className="relative z-10 w-[310px] rotate-3 rounded-[3rem] border-[10px] border-black bg-white p-4 shadow-2xl md:w-[360px]">
       <div className="mx-auto mb-5 h-6 w-28 rounded-full bg-black" />
+
       <p className="text-sm text-gray-500">Total balance</p>
       <h3 className="mt-1 text-3xl font-bold">$1,234.56</h3>
       <p className="mt-1 text-sm font-medium text-green-600">
@@ -341,9 +353,12 @@ function FinalCTA() {
           Join the waitlist and be the first to know when we launch.
         </p>
 
-        <button className="rounded-2xl bg-green-600 px-7 py-4 font-semibold text-white shadow-lg shadow-green-200 transition hover:bg-green-700">
+        <a
+          href="#waitlist"
+          className="rounded-2xl bg-green-600 px-7 py-4 font-semibold text-white shadow-lg shadow-green-200 transition hover:bg-green-700"
+        >
           Join the waitlist
-        </button>
+        </a>
       </div>
     </section>
   );

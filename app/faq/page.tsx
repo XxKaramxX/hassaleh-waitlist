@@ -1,4 +1,3 @@
-import { ArrowLeft } from "lucide-react";
 import SiteNavbar from "@/components/SiteNavbar";
 
 const faqs = [

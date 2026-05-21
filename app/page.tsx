@@ -18,7 +18,7 @@ import { supabase } from "@/lib/supabase";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#fbfcfb] text-[#090d0b]">
-      <Navbar />
+      <SiteNavbar />
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-20 pt-12 md:grid-cols-2 md:px-10 md:pt-20">
         <motion.div

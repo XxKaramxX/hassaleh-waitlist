@@ -1,4 +1,5 @@
-import { ArrowLeft, Globe2, PiggyBank, ShieldCheck, Sparkles } from "lucide-react";
+import { Globe2, PiggyBank, ShieldCheck, Sparkles } from "lucide-react";
+import SiteNavbar from "@/components/SiteNavbar";
 
 export default function WhyHassalehPage() {
   const points = [
@@ -26,22 +27,7 @@ export default function WhyHassalehPage() {
 
   return (
     <main className="min-h-screen bg-[#fbfcfb] text-[#090d0b]">
-      <header className="border-b border-gray-100 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-          <a href="/" className="flex items-center gap-3">
-            <LogoMark />
-            <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
-          </a>
-
-          <a
-            href="/"
-            className="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-5 py-3 text-sm font-semibold transition hover:border-green-200 hover:text-green-600"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back home
-          </a>
-        </div>
-      </header>
+      <SiteNavbar />
 
       <section className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
         <div className="max-w-4xl">
@@ -73,6 +59,7 @@ export default function WhyHassalehPage() {
                 </div>
 
                 <h2 className="mt-8 text-2xl font-semibold">{point.title}</h2>
+
                 <p className="mt-3 leading-7 text-gray-600">{point.text}</p>
               </div>
             );
@@ -93,15 +80,5 @@ export default function WhyHassalehPage() {
         </div>
       </section>
     </main>
-  );
-}
-
-function LogoMark() {
-  return (
-    <div className="grid h-8 w-8 grid-cols-3 gap-1">
-      {Array.from({ length: 9 }).map((_, index) => (
-        <span key={index} className="rounded-full bg-green-600" />
-      ))}
-    </div>
   );
 }

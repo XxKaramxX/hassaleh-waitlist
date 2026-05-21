@@ -108,10 +108,43 @@ function ArabicWaitlistCard() {
     }
 
     setStatus("success");
-    setMessage("تم تسجيلك في قائمة الانتظار. أهلاً بك في حصّالة.");
+    setMessage("");
     setFullName("");
     setEmail("");
     setCountry("");
+  }
+
+  if (status === "success") {
+    return (
+      <div
+        id="waitlist"
+        className="mt-8 max-w-md rounded-[1.75rem] border border-green-100 bg-white p-8 shadow-xl shadow-green-100"
+      >
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-700">
+          <CheckCircle2 className="h-9 w-9" />
+        </div>
+
+        <h3 className="mt-6 text-2xl font-semibold text-black">
+          تم تسجيلك في قائمة الانتظار.
+        </h3>
+
+        <p className="mt-3 text-base leading-7 text-gray-600">
+          أهلاً بك في حصّالة. سنقوم بإبلاغك عند فتح الوصول المبكر.
+        </p>
+
+        <div className="mt-6 rounded-2xl bg-green-50 p-4 text-sm font-medium text-green-700">
+          تم حفظ مكانك بنجاح.
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setStatus("idle")}
+          className="mt-5 w-full rounded-xl border border-gray-200 bg-white px-5 py-4 font-semibold text-gray-700 transition hover:border-green-200 hover:text-green-600"
+        >
+          إضافة شخص آخر
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -162,21 +195,11 @@ function ArabicWaitlistCard() {
         className="mt-4 flex w-full items-center justify-center rounded-xl bg-green-600 px-5 py-4 font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {status === "loading" ? "جاري التسجيل..." : "انضم إلى القائمة"}
-        {status === "success" ? (
-          <CheckCircle2 className="mr-2 h-5 w-5" />
-        ) : (
-          <ArrowUpRight className="mr-2 h-5 w-5" />
-        )}
+        <ArrowUpRight className="mr-2 h-5 w-5" />
       </button>
 
       {message ? (
-        <p
-          className={`mt-4 text-sm font-medium ${
-            status === "success" ? "text-green-600" : "text-red-500"
-          }`}
-        >
-          {message}
-        </p>
+        <p className="mt-4 text-sm font-medium text-red-500">{message}</p>
       ) : null}
 
       <p className="mt-5 text-sm text-gray-500">

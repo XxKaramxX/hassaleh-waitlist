@@ -129,7 +129,7 @@ function ArabicWaitlistCard() {
         </h3>
 
         <p className="mt-3 text-base leading-7 text-gray-600">
-          أهلاً بك في حصّالة. سنقوم بإبلاغك عند فتح الوصول المبكر.
+          أهلاً بك في حصّالة. سنقوم بإبلاغك عند الاتاحه المبكره.
         </p>
 
         <div className="mt-6 rounded-2xl bg-green-50 p-4 text-sm font-medium text-green-700">

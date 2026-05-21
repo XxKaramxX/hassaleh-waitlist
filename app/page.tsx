@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SiteNavbar from "@/components/SiteNavbar";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,

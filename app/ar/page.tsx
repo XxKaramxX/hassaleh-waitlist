@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import SiteFooter from "@/components/SiteFooter";
 import {
   ArrowUpRight,
   CheckCircle2,

@@ -1,5 +1,6 @@
 import { Globe2, PiggyBank, ShieldCheck, Sparkles } from "lucide-react";
 import SiteNavbar from "@/components/SiteNavbar";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function WhyHassalehPage() {
   const points = [

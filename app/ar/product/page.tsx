@@ -1,5 +1,6 @@
 import { BarChart3, CreditCard, Wallet, Zap } from "lucide-react";
 import SiteNavbar from "@/components/SiteNavbar";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function ArabicProductPage() {
   const features = [

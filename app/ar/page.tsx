@@ -28,7 +28,7 @@ export default function ArabicHome() {
             قريباً
           </div>
 
-          <h1 className="max-w-xl text-6xl font-semibold tracking-[-0.06em] text-black md:text-7xl">
+          <h1 className="max-w-xl text-5xl font-semibold tracking-[-0.06em] text-black md:text-7xl">
             حوّل باقي مشترياتك إلى{" "}
             <span className="text-green-600">ادخار رقمي.</span>
           </h1>

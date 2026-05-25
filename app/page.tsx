@@ -28,7 +28,7 @@ export default function Home() {
             Launching soon
           </div>
 
-          <h1 className="max-w-xl text-6xl font-semibold tracking-[-0.06em] text-black md:text-7xl">
+          <h1 className="max-w-xl text-5xl font-semibold tracking-[-0.06em] text-black md:text-7xl">
             Turn spare change into{" "}
             <span className="text-green-600">crypto.</span>
           </h1>

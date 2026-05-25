@@ -187,13 +187,11 @@ function WaitlistCard() {
 
   useEffect(() => {
     async function fetchWaitlistCount() {
-      const { count, error } = await supabase
-        .from("waitlist")
-        .select("*", { count: "exact", head: true });
+      const { data, error } = await supabase.rpc("get_waitlist_count");
 
-      if (!error && typeof count === "number") {
-        setWaitlistCount(BASE_WAITLIST_COUNT + count);
-      }
+if (!error && typeof data === "number") {
+  setWaitlistCount(BASE_WAITLIST_COUNT + data);
+}
     }
 
     fetchWaitlistCount();

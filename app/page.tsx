@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SiteNavbar from "@/components/SiteNavbar";
 import { motion } from "framer-motion";
 import {
@@ -174,13 +174,30 @@ function Navbar() {
 }
 
 function WaitlistCard() {
+  const BASE_WAITLIST_COUNT = 250;
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
+  const [waitlistCount, setWaitlistCount] = useState(BASE_WAITLIST_COUNT);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   );
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    async function fetchWaitlistCount() {
+      const { count, error } = await supabase
+        .from("waitlist")
+        .select("*", { count: "exact", head: true });
+
+      if (!error && typeof count === "number") {
+        setWaitlistCount(BASE_WAITLIST_COUNT + count);
+      }
+    }
+
+    fetchWaitlistCount();
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -219,6 +236,7 @@ function WaitlistCard() {
     setFullName("");
     setEmail("");
     setCountry("");
+    setWaitlistCount((currentCount) => currentCount + 1);
   }
 
   if (status === "success") {
@@ -242,6 +260,13 @@ function WaitlistCard() {
         <div className="mt-6 rounded-2xl bg-green-50 p-4 text-sm font-medium text-green-700">
           Your spot has been saved successfully.
         </div>
+
+        <p className="mt-5 text-sm text-gray-500">
+          <span className="font-semibold text-green-600">
+            {waitlistCount.toLocaleString()}+
+          </span>{" "}
+          people joined the waitlist
+        </p>
 
         <button
           type="button"
@@ -310,8 +335,10 @@ function WaitlistCard() {
       ) : null}
 
       <p className="mt-5 text-sm text-gray-500">
-        <span className="font-semibold text-green-600">1,254+</span> people
-        joined the waitlist
+        <span className="font-semibold text-green-600">
+          {waitlistCount.toLocaleString()}+
+        </span>{" "}
+        people joined the waitlist
       </p>
     </form>
   );

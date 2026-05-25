@@ -80,11 +80,11 @@ function ArabicWaitlistCard() {
 
   useEffect(() => {
     async function fetchWaitlistCount() {
-        const { data, error } = await supabase.rpc("get_waitlist_count");
+      const { data, error } = await supabase.rpc("get_waitlist_count");
 
-if (!error && typeof data === "number") {
-  setWaitlistCount(BASE_WAITLIST_COUNT + data);
-}
+      if (!error && typeof data === "number") {
+        setWaitlistCount(BASE_WAITLIST_COUNT + data);
+      }
     }
 
     fetchWaitlistCount();
@@ -391,6 +391,16 @@ function Footer() {
         <p className="text-sm text-gray-500">
           © 2026 Hassaleh. جميع الحقوق محفوظة.
         </p>
+
+        <div className="flex gap-6 text-sm text-gray-500">
+          <a href="/ar/privacy" className="transition hover:text-green-600">
+            سياسة الخصوصية
+          </a>
+
+          <a href="/ar/terms" className="transition hover:text-green-600">
+            شروط الاستخدام
+          </a>
+        </div>
       </div>
     </footer>
   );

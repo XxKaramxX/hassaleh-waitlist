@@ -61,7 +61,6 @@ export default function ArabicHome() {
 
       <HowItWorks />
       <FinalCTA />
-      <Footer />
     </main>
   );
 }
@@ -376,33 +375,6 @@ function FinalCTA() {
         </a>
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-gray-100 bg-white">
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-10">
-        <div className="flex items-center gap-3 text-black">
-          <LogoMark />
-          <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
-        </div>
-
-        <p className="text-sm text-gray-500">
-          © 2026 Hassaleh. جميع الحقوق محفوظة.
-        </p>
-
-        <div className="flex gap-6 text-sm text-gray-500">
-          <a href="/ar/privacy" className="transition hover:text-green-600">
-            سياسة الخصوصية
-          </a>
-
-          <a href="/ar/terms" className="transition hover:text-green-600">
-            شروط الاستخدام
-          </a>
-        </div>
-      </div>
-    </footer>
   );
 }
 

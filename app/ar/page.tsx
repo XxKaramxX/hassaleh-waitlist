@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,
@@ -67,13 +67,30 @@ export default function ArabicHome() {
 }
 
 function ArabicWaitlistCard() {
+  const BASE_WAITLIST_COUNT = 250;
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
+  const [waitlistCount, setWaitlistCount] = useState(BASE_WAITLIST_COUNT);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle"
   );
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    async function fetchWaitlistCount() {
+      const { count, error } = await supabase
+        .from("waitlist")
+        .select("*", { count: "exact", head: true });
+
+      if (!error && typeof count === "number") {
+        setWaitlistCount(BASE_WAITLIST_COUNT + count);
+      }
+    }
+
+    fetchWaitlistCount();
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -112,6 +129,7 @@ function ArabicWaitlistCard() {
     setFullName("");
     setEmail("");
     setCountry("");
+    setWaitlistCount((currentCount) => currentCount + 1);
   }
 
   if (status === "success") {
@@ -129,12 +147,19 @@ function ArabicWaitlistCard() {
         </h3>
 
         <p className="mt-3 text-base leading-7 text-gray-600">
-          أهلاً بك في حصّالة. سنقوم بإبلاغك عند الاتاحه المبكره.
+          أهلاً بك في حصّالة. سنقوم بإبلاغك عند فتح الوصول المبكر.
         </p>
 
         <div className="mt-6 rounded-2xl bg-green-50 p-4 text-sm font-medium text-green-700">
           تم حفظ مكانك بنجاح.
         </div>
+
+        <p className="mt-5 text-sm text-gray-500">
+          <span className="font-semibold text-green-600">
+            {waitlistCount.toLocaleString()}+
+          </span>{" "}
+          شخص انضموا إلى القائمة
+        </p>
 
         <button
           type="button"
@@ -203,8 +228,10 @@ function ArabicWaitlistCard() {
       ) : null}
 
       <p className="mt-5 text-sm text-gray-500">
-        <span className="font-semibold text-green-600">1,254+</span> شخص انضموا
-        إلى القائمة
+        <span className="font-semibold text-green-600">
+          {waitlistCount.toLocaleString()}+
+        </span>{" "}
+        شخص انضموا إلى القائمة
       </p>
     </form>
   );
@@ -212,7 +239,10 @@ function ArabicWaitlistCard() {
 
 function PhoneMockup() {
   return (
-    <div dir="ltr" className="relative z-10 w-[310px] rotate-3 rounded-[3rem] border-[10px] border-black bg-white p-4 shadow-2xl md:w-[360px]">
+    <div
+      dir="ltr"
+      className="relative z-10 w-[310px] rotate-3 rounded-[3rem] border-[10px] border-black bg-white p-4 shadow-2xl md:w-[360px]"
+    >
       <div className="mx-auto mb-5 h-6 w-28 rounded-full bg-black" />
 
       <p className="text-sm text-gray-500">Total balance</p>

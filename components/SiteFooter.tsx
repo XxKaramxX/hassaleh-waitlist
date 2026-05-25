@@ -32,6 +32,7 @@ export default function SiteFooter() {
             <a
               href="#"
               className="text-lg font-semibold transition hover:text-black"
+              aria-label="X"
             >
               𝕏
             </a>
@@ -39,6 +40,7 @@ export default function SiteFooter() {
             <a
               href="#"
               className="text-sm font-semibold transition hover:text-green-600"
+              aria-label="Instagram"
             >
               IG
             </a>
@@ -46,15 +48,9 @@ export default function SiteFooter() {
             <a
               href="#"
               className="text-sm font-semibold transition hover:text-green-600"
+              aria-label="LinkedIn"
             >
               in
-            </a>
-
-            <a
-              href="#"
-              className="text-sm font-semibold transition hover:text-green-600"
-            >
-              ▶
             </a>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SiteFooter from "@/components/SiteFooter";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Hassaleh",
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body>
         {children}
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );

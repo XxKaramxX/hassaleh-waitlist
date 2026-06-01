@@ -24,12 +24,14 @@ export default function SiteNavbar() {
         { label: "طريقة العمل", href: "/ar#how-it-works" },
         { label: "لماذا حصّالة", href: "/ar/why-hassaleh" },
         { label: "المنتج", href: "/ar/product" },
+        { label: "من نحن", href: "/ar/about" },
         { label: "الأسئلة الشائعة", href: "/ar/faq" },
       ]
     : [
         { label: "How it works", href: "/#how-it-works" },
         { label: "Why Hassaleh", href: "/why-hassaleh" },
         { label: "Product", href: "/product" },
+        { label: "About", href: "/about" },
         { label: "FAQ", href: "/faq" },
       ];
 
@@ -41,7 +43,7 @@ export default function SiteNavbar() {
           <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
         </a>
 
-        <nav className="hidden items-center gap-10 text-sm font-medium md:flex">
+        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}

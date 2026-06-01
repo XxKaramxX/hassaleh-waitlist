@@ -72,7 +72,7 @@ export default function ArabicTermsPage() {
             <p className="mt-3">
               للاستفسار عن شروط الاستخدام، يمكنك التواصل معنا عبر:{" "}
               <span className="font-semibold text-black">
-                hello@hassaleh.com
+                hello@hassalehapp.com
               </span>
             </p>
           </section>

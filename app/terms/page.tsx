@@ -84,7 +84,7 @@ export default function TermsPage() {
             <p className="mt-3">
               If you have questions about these Terms, contact us at:{" "}
               <span className="font-semibold text-black">
-                hello@hassaleh.com
+                hello@hassalehapp.com
               </span>
             </p>
           </section>

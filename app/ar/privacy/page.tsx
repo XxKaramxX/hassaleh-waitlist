@@ -71,7 +71,7 @@ export default function ArabicPrivacyPage() {
             <p className="mt-3">
               للاستفسار عن سياسة الخصوصية، يمكنك التواصل معنا عبر:{" "}
               <span className="font-semibold text-black">
-                hello@hassaleh.com
+                hello@hassalehapp.com
               </span>
             </p>
           </section>

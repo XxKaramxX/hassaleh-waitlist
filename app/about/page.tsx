@@ -1,7 +1,6 @@
-import SiteNavbar from "@/components/SiteNavbar";
+iimport SiteNavbar from "@/components/SiteNavbar";
 import {
   ArrowUpRight,
-  CheckCircle2,
   Globe2,
   ShieldCheck,
   Sparkles,
@@ -145,8 +144,8 @@ export default function AboutPage() {
           </p>
 
           <h2 className="max-w-5xl text-5xl font-semibold leading-[1.02] tracking-[-0.06em] text-black md:text-7xl">
-            We believe saving should start small, feel automatic, and open the
-            door to digital assets.
+            We believe crypto can help power the next generation of saving,
+            investing, and economic growth across the Middle East.
           </h2>
         </div>
       </section>
@@ -155,41 +154,94 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 gap-12 border-b border-gray-200 pb-20 md:grid-cols-[0.45fr_1fr]">
           <div>
             <p className="text-sm font-bold uppercase tracking-wide text-green-600">
-              Our founders
+              Our team
             </p>
 
             <h2 className="mt-6 max-w-sm text-4xl font-semibold leading-tight tracking-[-0.05em] text-black md:text-5xl">
-              Built by operators. Shaped by market experience.
+              Built by operators. Shaped by crypto conviction.
             </h2>
           </div>
 
-          <div className="max-w-3xl space-y-8 text-lg leading-8 text-gray-700">
-            <p>
-              <span className="font-semibold text-green-700">
+          <div className="max-w-4xl space-y-10 text-lg leading-8 text-gray-700">
+            <div className="border-t border-gray-200 pt-8">
+              <h3 className="text-2xl font-semibold tracking-[-0.03em] text-black">
                 Karam Alrafati
-              </span>{" "}
-              founded Hassaleh after years of working in technology and
-              investing in crypto. With 8 years of experience leading digital
-              platforms and cross-functional projects, an MBA from DePaul
-              University, and active crypto experience since 2017, Karam has
-              seen both sides of the market: the opportunity digital assets
-              create, and the barriers that keep everyday people out.
-            </p>
+              </h3>
+              <p className="mt-1 font-semibold text-green-700">
+                Founder
+              </p>
 
-            <p>
-              <span className="font-semibold text-green-700">
+              <p className="mt-5">
+                Karam founded Hassaleh after years of working in technology and
+                investing in crypto. With 8 years of experience leading digital
+                platforms and cross-functional projects, an MBA from DePaul
+                University, and active crypto experience since 2017, Karam has
+                seen both sides of the market: the opportunity digital assets
+                create, and the barriers that keep everyday people out.
+              </p>
+
+              <p className="mt-5">
+                That experience shaped the core idea behind Hassaleh: crypto
+                should not only be accessible to people who already understand
+                exchanges, wallets, charts, and timing. It should be simple
+                enough to start with spare change.
+              </p>
+            </div>
+
+            <div className="border-t border-gray-200 pt-8">
+              <h3 className="text-2xl font-semibold tracking-[-0.03em] text-black">
+                Mahmoud Joudeh
+              </h3>
+              <p className="mt-1 font-semibold text-green-700">
+                Co-Founder & VP of Product
+              </p>
+
+              <p className="mt-5">
+                Mahmoud brings 10 years of product sales experience, giving
+                Hassaleh a deep understanding of how users evaluate, adopt, and
+                trust new products. His background strengthens the product
+                strategy, user experience, and go-to-market execution behind
+                Hassaleh.
+              </p>
+
+              <p className="mt-5">
+                As an active crypto investor, Mahmoud understands why digital
+                assets matter and why the next wave of adoption depends on
+                products that feel simple, trustworthy, and built for real
+                everyday behavior.
+              </p>
+            </div>
+
+            <div className="border-t border-gray-200 pt-8">
+              <h3 className="text-2xl font-semibold tracking-[-0.03em] text-black">
                 Rama Abu Diab
-              </span>{" "}
-              leads marketing and brand growth for Hassaleh. With an MBA from
-              DePaul University and a strong business background, Rama is
-              focused on building the trust, clarity, and regional brand
-              presence needed to bring Hassaleh to everyday users.
-            </p>
+              </h3>
+              <p className="mt-1 font-semibold text-green-700">
+                Head of Marketing
+              </p>
 
-            <p className="font-semibold text-black">
-              Different backgrounds. Same mission: make digital saving simple,
-              trusted, and accessible for the region.
-            </p>
+              <p className="mt-5">
+                Rama leads marketing and brand growth for Hassaleh. With an MBA
+                from DePaul University and a strong business background, Rama is
+                focused on building the trust, clarity, and regional brand
+                presence needed to bring Hassaleh to everyday users.
+              </p>
+
+              <p className="mt-5">
+                As a serious crypto investor, Rama understands the importance of
+                digital assets and the need to communicate them in a way that is
+                clear, approachable, and credible for users across the region.
+              </p>
+            </div>
+
+            <div className="border-t border-gray-200 pt-8">
+              <p className="text-2xl font-semibold leading-9 tracking-[-0.04em] text-black">
+                Different backgrounds. Same mission: build Hassaleh into a
+                trusted digital savings platform that helps improve financial
+                access, crypto adoption, and long-term economic opportunity
+                across the Middle East.
+              </p>
+            </div>
           </div>
         </div>
       </section>

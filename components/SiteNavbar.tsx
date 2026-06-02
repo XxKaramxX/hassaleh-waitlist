@@ -36,90 +36,106 @@ export default function SiteNavbar() {
       ];
 
   return (
-    <header className="relative border-b border-gray-100 bg-white/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-        <a href={isArabic ? "/ar" : "/"} className="flex items-center gap-3">
-          <LogoMark />
-          <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
-        </a>
-
-        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="transition hover:text-green-600"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-3 md:flex">
+    <>
+      <header className="relative z-[100] border-b border-gray-100 bg-white/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
           <a
-            href={getLanguageSwitchPath()}
-            className="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-black transition hover:border-green-200 hover:text-green-600"
+            href={isArabic ? "/ar" : "/"}
+            className="flex items-center gap-3"
+            onClick={() => setMobileMenuOpen(false)}
           >
-            {isArabic ? "EN" : "AR"}
+            <LogoMark />
+            <span className="font-semibold tracking-[0.35em]">HASSALEH</span>
           </a>
 
-          <a
-            href={isArabic ? "/ar#waitlist" : "/#waitlist"}
-            className="rounded-2xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-green-100 transition hover:bg-green-700"
-          >
-            {isArabic ? "انضم للقائمة" : "Join the waitlist"}
-            <ArrowUpRight className="ml-2 inline h-4 w-4" />
-          </a>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex h-11 w-11 items-center justify-center rounded-2xl border border-gray-200 bg-white text-black md:hidden"
-          aria-label="Toggle mobile menu"
-        >
-          {mobileMenuOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </button>
-      </div>
-
-      {mobileMenuOpen ? (
-        <div className="absolute left-0 right-0 top-full z-50 border-b border-gray-100 bg-white px-6 py-5 shadow-xl shadow-gray-100 md:hidden">
-          <nav className="flex flex-col gap-3 text-sm font-semibold">
+          <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="rounded-2xl px-4 py-3 transition hover:bg-green-50 hover:text-green-600"
+                className="transition hover:text-green-600"
               >
                 {link.label}
               </a>
             ))}
+          </nav>
 
+          <div className="hidden items-center gap-3 md:flex">
             <a
               href={getLanguageSwitchPath()}
-              onClick={() => setMobileMenuOpen(false)}
-              className="rounded-2xl border border-gray-200 px-4 py-3 text-center transition hover:border-green-200 hover:text-green-600"
+              className="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-black transition hover:border-green-200 hover:text-green-600"
             >
               {isArabic ? "EN" : "AR"}
             </a>
 
             <a
               href={isArabic ? "/ar#waitlist" : "/#waitlist"}
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-2 flex items-center justify-center rounded-2xl bg-green-600 px-5 py-4 font-semibold text-white"
+              className="rounded-2xl bg-green-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-green-100 transition hover:bg-green-700"
             >
               {isArabic ? "انضم للقائمة" : "Join the waitlist"}
-              <ArrowUpRight className="ml-2 h-4 w-4" />
+              <ArrowUpRight className="ml-2 inline h-4 w-4" />
             </a>
-          </nav>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gray-200 bg-white text-black shadow-sm md:hidden"
+            aria-label="Toggle mobile menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
+        </div>
+      </header>
+
+      {mobileMenuOpen ? (
+        <div className="fixed inset-0 z-[99] bg-white md:hidden">
+          <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-6 pb-10 pt-32">
+            <nav className="flex flex-col gap-2 text-3xl font-semibold tracking-[-0.04em] text-black">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-3xl px-2 py-4 transition hover:bg-green-50 hover:text-green-600"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="mt-10 grid grid-cols-1 gap-4">
+              <a
+                href={getLanguageSwitchPath()}
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center rounded-2xl border border-gray-200 bg-white px-5 py-4 text-base font-semibold text-black transition hover:border-green-200 hover:text-green-600"
+              >
+                {isArabic ? "EN" : "AR"}
+              </a>
+
+              <a
+                href={isArabic ? "/ar#waitlist" : "/#waitlist"}
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center rounded-2xl bg-green-600 px-5 py-4 text-base font-semibold text-white shadow-lg shadow-green-100"
+              >
+                {isArabic ? "انضم إلى القائمة" : "Join the waitlist"}
+                <ArrowUpRight className="ml-2 h-5 w-5" />
+              </a>
+            </div>
+
+            <div className="mt-auto border-t border-gray-100 pt-8 text-sm text-gray-500">
+              {isArabic
+                ? "حصّالة — ادخار رقمي للشرق الأوسط."
+                : "Hassaleh — digital saving for MENA."}
+            </div>
+          </div>
         </div>
       ) : null}
-    </header>
+    </>
   );
 }
 

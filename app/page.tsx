@@ -25,7 +25,7 @@ export default function Home() {
     <main className="min-h-screen overflow-hidden bg-[#fbfcfb] text-[#090d0b]">
       <SiteNavbar />
 
-      <section className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-14 px-6 pb-24 pt-14 md:grid-cols-2 md:px-10 md:pb-28 md:pt-24">
+      <section className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-10 md:grid-cols-2 md:gap-14 md:px-10 md:pb-28 md:pt-24">
         <div className="absolute left-1/2 top-20 -z-10 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-green-100/50 blur-3xl" />
 
         <motion.div
@@ -45,7 +45,7 @@ export default function Home() {
           <motion.h1
             variants={fadeUp}
             transition={{ duration: 0.8 }}
-            className="max-w-2xl text-6xl font-semibold leading-[0.92] tracking-[-0.075em] text-black md:text-8xl"
+            className="max-w-2xl text-5xl font-semibold leading-[0.95] tracking-[-0.065em] text-black sm:text-6xl md:text-8xl"
           >
             Spare change.{" "}
             <span className="text-green-600">Digital assets.</span> Automatic

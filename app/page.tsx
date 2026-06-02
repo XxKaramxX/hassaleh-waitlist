@@ -175,7 +175,7 @@ function WaitlistCard() {
         id="waitlist"
         initial={{ opacity: 0, scale: 0.96, y: 16 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="mt-9 max-w-md rounded-[2rem] border border-green-100 bg-white p-8 shadow-2xl shadow-green-100"
+        className="mt-10 max-w-xl rounded-[2.25rem] border border-green-100 bg-white p-8 shadow-2xl shadow-green-100 md:p-9"
       >
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-green-700">
           <CheckCircle2 className="h-9 w-9" />
@@ -215,9 +215,9 @@ function WaitlistCard() {
     <form
       id="waitlist"
       onSubmit={handleSubmit}
-      className="mt-9 max-w-md rounded-[2rem] border border-gray-200 bg-white p-6 shadow-2xl shadow-gray-100"
+      className="mt-10 max-w-xl rounded-[2.25rem] border border-gray-200 bg-white p-7 shadow-2xl shadow-gray-100 md:p-8"
     >
-      <h3 className="text-xl font-semibold">Join the waitlist</h3>
+      <h3 className="text-2xl font-semibold tracking-[-0.03em]">Join the waitlist</h3>
 
       <p className="mt-1 text-sm text-gray-500">
         Be first to access Hassaleh before launch.
@@ -228,7 +228,7 @@ function WaitlistCard() {
           value={fullName}
           onChange={(event) => setFullName(event.target.value)}
           placeholder="Full name"
-          className="rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-50"
+          className="rounded-xl border border-gray-200 px-4 py-4 text-sm outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-50"
         />
 
         <input
@@ -236,14 +236,14 @@ function WaitlistCard() {
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email address"
           type="email"
-          className="rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-50"
+          className="rounded-xl border border-gray-200 px-4 py-4 text-sm outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-50"
         />
       </div>
 
       <select
         value={country}
         onChange={(event) => setCountry(event.target.value)}
-        className="mt-3 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm text-gray-500 outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-50"
+        className="mt-3 w-full rounded-xl border border-gray-200 px-4 py-4 text-sm text-gray-500 outline-none transition focus:border-green-500 focus:ring-4 focus:ring-green-50"
       >
         <option value="">Select your country</option>
         <option>Jordan</option>
@@ -256,7 +256,7 @@ function WaitlistCard() {
 
       <button
         disabled={status === "loading"}
-        className="mt-4 flex w-full items-center justify-center rounded-xl bg-green-600 px-5 py-4 font-semibold text-white shadow-lg shadow-green-100 transition hover:-translate-y-0.5 hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-70"
+        className="mt-4 flex w-full items-center justify-center rounded-xl bg-green-600 px-5 py-5 font-semibold text-white shadow-lg shadow-green-100 transition hover:-translate-y-0.5 hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {status === "loading" ? "Joining..." : "Join the waitlist"}
         <ArrowUpRight className="ml-2 h-5 w-5" />
@@ -266,7 +266,7 @@ function WaitlistCard() {
         <p className="mt-4 text-sm font-medium text-red-500">{message}</p>
       ) : null}
 
-      <p className="mt-5 text-sm text-gray-500">
+      <p className="mt-5 text-base text-gray-500">
         <span className="font-semibold text-green-600">
           {waitlistCount.toLocaleString()}+
         </span>{" "}

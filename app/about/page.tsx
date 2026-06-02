@@ -1,4 +1,4 @@
-iimport SiteNavbar from "@/components/SiteNavbar";
+import SiteNavbar from "@/components/SiteNavbar";
 import {
   ArrowUpRight,
   Globe2,

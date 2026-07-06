@@ -31,61 +31,163 @@ function cleanCoinID(value: string | null): string {
 function rangeConfig(range: ChartRange) {
   switch (range) {
     case "LIVE":
-      return { days: "1", interval: undefined, cacheSeconds: 30 };
+      return { days: "1", interval: undefined, cacheSeconds: 30, targetPoints: 60 };
     case "1D":
-      return { days: "1", interval: undefined, cacheSeconds: 120 };
+      return { days: "1", interval: undefined, cacheSeconds: 120, targetPoints: 80 };
     case "1W":
-      return { days: "7", interval: "hourly", cacheSeconds: 300 };
+      return { days: "7", interval: "hourly", cacheSeconds: 300, targetPoints: 90 };
     case "1M":
-      return { days: "30", interval: "daily", cacheSeconds: 600 };
+      return { days: "30", interval: undefined, cacheSeconds: 600, targetPoints: 90 };
     case "3M":
-      return { days: "90", interval: "daily", cacheSeconds: 600 };
+      return { days: "90", interval: undefined, cacheSeconds: 600, targetPoints: 100 };
     case "1Y":
-      return { days: "365", interval: "daily", cacheSeconds: 1800 };
+      return { days: "365", interval: undefined, cacheSeconds: 1800, targetPoints: 120 };
     case "5Y":
-      return { days: "1825", interval: "daily", cacheSeconds: 1800 };
+      return { days: "1825", interval: undefined, cacheSeconds: 1800, targetPoints: 140 };
   }
 }
 
 function fallbackHistory(range: ChartRange): HistoryPoint[] {
   const now = Date.now();
+  const config = rangeConfig(range);
 
-  const config = (() => {
+  const duration = (() => {
     switch (range) {
       case "LIVE":
-        return { duration: 60 * 60 * 1000, count: 24, drift: 0.002, volatility: 0.0018 };
+        return 60 * 60 * 1000;
       case "1D":
-        return { duration: 24 * 60 * 60 * 1000, count: 48, drift: 0.006, volatility: 0.003 };
+        return 24 * 60 * 60 * 1000;
       case "1W":
-        return { duration: 7 * 24 * 60 * 60 * 1000, count: 56, drift: 0.018, volatility: 0.006 };
+        return 7 * 24 * 60 * 60 * 1000;
       case "1M":
-        return { duration: 30 * 24 * 60 * 60 * 1000, count: 64, drift: 0.032, volatility: 0.008 };
+        return 30 * 24 * 60 * 60 * 1000;
       case "3M":
-        return { duration: 90 * 24 * 60 * 60 * 1000, count: 72, drift: 0.052, volatility: 0.01 };
+        return 90 * 24 * 60 * 60 * 1000;
       case "1Y":
-        return { duration: 365 * 24 * 60 * 60 * 1000, count: 84, drift: 0.11, volatility: 0.014 };
+        return 365 * 24 * 60 * 60 * 1000;
       case "5Y":
-        return { duration: 5 * 365 * 24 * 60 * 60 * 1000, count: 96, drift: 0.42, volatility: 0.018 };
+        return 5 * 365 * 24 * 60 * 60 * 1000;
+    }
+  })();
+
+  const totalDrift = (() => {
+    switch (range) {
+      case "LIVE":
+        return 0.002;
+      case "1D":
+        return 0.008;
+      case "1W":
+        return 0.025;
+      case "1M":
+        return 0.05;
+      case "3M":
+        return -0.08;
+      case "1Y":
+        return -0.25;
+      case "5Y":
+        return 0.65;
+    }
+  })();
+
+  const volatility = (() => {
+    switch (range) {
+      case "LIVE":
+        return 0.0018;
+      case "1D":
+        return 0.004;
+      case "1W":
+        return 0.008;
+      case "1M":
+        return 0.012;
+      case "3M":
+        return 0.018;
+      case "1Y":
+        return 0.022;
+      case "5Y":
+        return 0.028;
     }
   })();
 
   let price = 100;
+  const points: HistoryPoint[] = [];
 
-  return Array.from({ length: config.count }).map((_, index) => {
-    const progress = index / Math.max(config.count - 1, 1);
-    const time = now - config.duration * (1 - progress);
+  for (let index = 0; index < config.targetPoints; index++) {
+    const progress = index / Math.max(config.targetPoints - 1, 1);
+    const timestamp = now - duration * (1 - progress);
 
-    const trendMove = config.drift / config.count;
-    const softNoise = Math.sin(progress * Math.PI * 3) * config.volatility;
-    const microNoise = Math.sin(progress * Math.PI * 11) * config.volatility * 0.35;
+    const driftMove = totalDrift / config.targetPoints;
+    const deterministicNoise =
+      Math.sin(progress * Math.PI * 8.3) * volatility +
+      Math.sin(progress * Math.PI * 19.7) * volatility * 0.45 +
+      Math.sin(progress * Math.PI * 37.1) * volatility * 0.22;
 
-    price = Math.max(price * (1 + trendMove + softNoise + microNoise), 0.01);
+    price = Math.max(price * (1 + driftMove + deterministicNoise), 0.01);
 
-    return {
-      date: new Date(time).toISOString(),
+    points.push({
+      date: new Date(timestamp).toISOString(),
       price,
-    };
-  });
+    });
+  }
+
+  return points;
+}
+
+function normalizePoints(points: HistoryPoint[], targetCount: number): HistoryPoint[] {
+  const validPoints = points
+    .filter((point) => Number.isFinite(point.price) && point.price > 0)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  if (validPoints.length <= 1) {
+    return validPoints;
+  }
+
+  if (validPoints.length === targetCount) {
+    return validPoints;
+  }
+
+  const firstTime = new Date(validPoints[0].date).getTime();
+  const lastTime = new Date(validPoints[validPoints.length - 1].date).getTime();
+
+  if (firstTime === lastTime) {
+    return validPoints;
+  }
+
+  const normalized: HistoryPoint[] = [];
+
+  for (let index = 0; index < targetCount; index++) {
+    const progress = index / Math.max(targetCount - 1, 1);
+    const targetTime = firstTime + (lastTime - firstTime) * progress;
+
+    let rightIndex = validPoints.findIndex((point) => new Date(point.date).getTime() >= targetTime);
+
+    if (rightIndex <= 0) {
+      normalized.push(validPoints[0]);
+      continue;
+    }
+
+    if (rightIndex === -1) {
+      normalized.push(validPoints[validPoints.length - 1]);
+      continue;
+    }
+
+    const left = validPoints[rightIndex - 1];
+    const right = validPoints[rightIndex];
+
+    const leftTime = new Date(left.date).getTime();
+    const rightTime = new Date(right.date).getTime();
+
+    const localProgress =
+      rightTime === leftTime ? 0 : (targetTime - leftTime) / (rightTime - leftTime);
+
+    const price = left.price + (right.price - left.price) * localProgress;
+
+    normalized.push({
+      date: new Date(targetTime).toISOString(),
+      price,
+    });
+  }
+
+  return normalized;
 }
 
 export async function GET(request: NextRequest) {
@@ -125,11 +227,13 @@ export async function GET(request: NextRequest) {
     });
 
     if (!response.ok) {
+      const fallback = cached?.points || fallbackHistory(range);
+
       return NextResponse.json({
         source: cached ? "stale-cache" : "fallback",
         coinID,
         range,
-        points: cached?.points || fallbackHistory(range),
+        points: fallback,
       });
     }
 
@@ -158,6 +262,8 @@ export async function GET(request: NextRequest) {
 
     if (points.length <= 1) {
       points = cached?.points || fallbackHistory(range);
+    } else {
+      points = normalizePoints(points, config.targetPoints);
     }
 
     memoryCache.set(cacheKey, {
@@ -172,11 +278,13 @@ export async function GET(request: NextRequest) {
       points,
     });
   } catch {
+    const fallback = cached?.points || fallbackHistory(range);
+
     return NextResponse.json({
       source: cached ? "stale-cache" : "fallback",
       coinID,
       range,
-      points: cached?.points || fallbackHistory(range),
+      points: fallback,
     });
   }
 }

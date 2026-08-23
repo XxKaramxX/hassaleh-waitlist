@@ -92,7 +92,7 @@ function fallbackAbout(coinID: string): string {
   }
 }
 
-async function fetchCoinGeckoDetails(coinID: string) {
+async function fetchCoinGeckoDetails(coinID: string): Promise<any> {
   const url = new URL(`https://api.coingecko.com/api/v3/coins/${coinID}`);
 
   url.searchParams.set("localization", "false");
@@ -118,7 +118,9 @@ async function fetchCoinGeckoDetails(coinID: string) {
   return response.json();
 }
 
-async function fetchCoinGeckoYearRange(coinID: string) {
+async function fetchCoinGeckoYearRange(
+  coinID: string
+): Promise<{ high52Week: number | null; low52Week: number | null }> {
   const url = new URL(`https://api.coingecko.com/api/v3/coins/${coinID}/market_chart`);
 
   url.searchParams.set("vs_currency", "usd");
@@ -137,22 +139,28 @@ async function fetchCoinGeckoYearRange(coinID: string) {
     throw new Error(`CoinGecko 52-week range failed: ${response.status}`);
   }
 
-  const data = await response.json();
+  const data: unknown = await response.json();
 
-  const prices: number[] = Array.isArray(data.prices)
-    ? data.prices
-        .filter((entry: unknown): entry is [number, number] => {
-          return (
-            Array.isArray(entry) &&
-            entry.length >= 2 &&
-            typeof entry[0] === "number" &&
-            typeof entry[1] === "number" &&
-            Number.isFinite(entry[1]) &&
-            entry[1] > 0
-          );
-        })
-        .map((entry) => entry[1])
-    : [];
+  const rawPrices: unknown[] =
+    typeof data === "object" &&
+    data !== null &&
+    "prices" in data &&
+    Array.isArray((data as { prices?: unknown }).prices)
+      ? ((data as { prices: unknown[] }).prices)
+      : [];
+
+  const prices: number[] = rawPrices
+    .filter((entry): entry is [number, number] => {
+      return (
+        Array.isArray(entry) &&
+        entry.length >= 2 &&
+        typeof entry[0] === "number" &&
+        typeof entry[1] === "number" &&
+        Number.isFinite(entry[1]) &&
+        entry[1] > 0
+      );
+    })
+    .map((entry: [number, number]) => entry[1]);
 
   if (prices.length === 0) {
     return {
@@ -194,21 +202,40 @@ async function fetchCryptoPanicNews(symbol: string): Promise<CoinNewsItem[]> {
     return [];
   }
 
-  const data = await response.json();
+  const data: unknown = await response.json();
 
-  if (!Array.isArray(data.results)) {
-    return [];
-  }
+  const results: unknown[] =
+    typeof data === "object" &&
+    data !== null &&
+    "results" in data &&
+    Array.isArray((data as { results?: unknown }).results)
+      ? (data as { results: unknown[] }).results
+      : [];
 
-  return data.results
+  return results
     .slice(0, 5)
-    .map((item: any): CoinNewsItem | null => {
-      const title = typeof item.title === "string" ? item.title : "";
-      const url = typeof item.url === "string" ? item.url : "";
-      const publishedAt = typeof item.published_at === "string" ? item.published_at : "";
+    .map((item): CoinNewsItem | null => {
+      if (typeof item !== "object" || item === null) {
+        return null;
+      }
+
+      const record = item as {
+        title?: unknown;
+        url?: unknown;
+        published_at?: unknown;
+        source?: {
+          title?: unknown;
+        };
+      };
+
+      const title = typeof record.title === "string" ? record.title : "";
+      const url = typeof record.url === "string" ? record.url : "";
+      const publishedAt =
+        typeof record.published_at === "string" ? record.published_at : "";
+
       const source =
-        typeof item.source?.title === "string"
-          ? item.source.title
+        typeof record.source?.title === "string"
+          ? record.source.title
           : "CryptoPanic";
 
       if (!title || !url) {
@@ -222,7 +249,7 @@ async function fetchCryptoPanicNews(symbol: string): Promise<CoinNewsItem[]> {
         publishedAt,
       };
     })
-    .filter((item: CoinNewsItem | null): item is CoinNewsItem => item !== null);
+    .filter((item): item is CoinNewsItem => item !== null);
 }
 
 function buildFallbackResponse(coinID: string): CoinDetailsResponse {
@@ -267,9 +294,7 @@ export async function GET(request: NextRequest) {
     const symbol = typeof details.symbol === "string" ? details.symbol : coinID;
 
     const rawAbout = stripHTML(details.description?.en);
-    const about = rawAbout
-      ? truncateText(rawAbout, 520)
-      : fallbackAbout(coinID);
+    const about = rawAbout ? truncateText(rawAbout, 520) : fallbackAbout(coinID);
 
     const marketCap =
       typeof details.market_data?.market_cap?.usd === "number"
